@@ -5,77 +5,143 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV Cardiac Echo 課後回饋問卷</title>
     <style>
+        /* 定義醫療科技風的色彩變數 */
         :root {
-            --primary-color: #673ab7; 
-            --bg-color: #f0ebf8;
-            --card-bg: #ffffff;
-            --text-main: #202124;
-            --text-muted: #5f6368;
-            --border-color: #dadce0;
+            --bg-dark: #0a0f16;
+            --card-bg: #111823;
+            --tech-cyan: #00e5ff;
+            --tech-cyan-glow: rgba(0, 229, 255, 0.2);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg-dark);
             color: var(--text-main);
             line-height: 1.6;
             margin: 0;
-            padding: 20px 10px;
+            padding: 30px 15px;
+            /* 加上微微的網格背景增加科技感 */
+            background-image: 
+                linear-gradient(var(--border-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
 
         .container {
-            max-width: 700px;
+            max-width: 760px;
             margin: 0 auto;
         }
 
+        /* 科技風卡片設計 */
         .card {
             background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 24px;
-            margin-bottom: 16px;
-            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+            border-radius: 6px;
+            padding: 28px;
+            margin-bottom: 24px;
             border: 1px solid var(--border-color);
-            border-top: 10px solid var(--primary-color);
+            border-left: 4px solid var(--tech-cyan);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
         }
 
-        .card:not(:first-child) {
-            border-top: 1px solid var(--border-color);
+        /* 卡片上方的光暈掃描線裝飾 */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--tech-cyan), transparent);
+            opacity: 0.5;
         }
 
-        h1 {
-            font-size: 24px;
+        /* 標題與圖示 */
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--tech-cyan);
+            font-size: 26px;
             margin-top: 0;
             margin-bottom: 8px;
+            text-shadow: 0 0 10px var(--tech-cyan-glow);
         }
 
         h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-size: 20px;
-            color: var(--primary-color);
-            margin-bottom: 16px;
-            border-bottom: 2px solid var(--bg-color);
-            padding-bottom: 8px;
+            color: var(--tech-cyan);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* SVG 線條圖示設定 */
+        .icon {
+            width: 28px;
+            height: 28px;
+            fill: none;
+            stroke: var(--tech-cyan);
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .question-title {
             font-size: 16px;
             font-weight: 600;
             margin-bottom: 12px;
+            color: #ffffff;
         }
 
         .question-desc {
             font-size: 14px;
-            color: var(--text-muted);
+            color: var(--tech-cyan);
             margin-bottom: 16px;
-            background-color: #f8f9fa;
-            padding: 8px 12px;
-            border-left: 4px solid #cecece;
+            background-color: rgba(0, 229, 255, 0.05);
+            padding: 10px 14px;
+            border-left: 2px solid var(--tech-cyan);
             border-radius: 4px;
         }
 
+        /* 輸入框與下拉選單 */
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            background-color: #0d131c;
+            border: 1px solid #2d3748;
+            color: #ffffff;
+            border-radius: 4px;
+            font-size: 15px;
+            font-family: inherit;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--tech-cyan);
+            box-shadow: 0 0 8px var(--tech-cyan-glow);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* 選擇題樣式 */
         .radio-group {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
+            margin-bottom: 20px;
         }
 
         .radio-label {
@@ -85,19 +151,49 @@
             font-size: 15px;
         }
 
-        .radio-label input[type="radio"] {
-            margin-right: 12px;
-            transform: scale(1.2);
+        /* 客製化 Radio 按鈕 */
+        input[type="radio"] {
+            appearance: none;
+            background-color: #0d131c;
+            margin: 0 12px 0 0;
+            font: inherit;
+            color: var(--tech-cyan);
+            width: 20px;
+            height: 20px;
+            border: 1px solid #4a5568;
+            border-radius: 50%;
+            display: grid;
+            place-content: center;
             cursor: pointer;
         }
 
+        input[type="radio"]::before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em var(--tech-cyan);
+        }
+
+        input[type="radio"]:checked::before {
+            transform: scale(1);
+        }
+
+        input[type="radio"]:checked {
+            border-color: var(--tech-cyan);
+            box-shadow: 0 0 6px var(--tech-cyan-glow);
+        }
+
+        /* Likert Scale 樣式 (1-5分) */
         .likert-scale {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #fafafa;
-            padding: 16px;
-            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.02);
+            padding: 20px;
+            border-radius: 6px;
             border: 1px solid var(--border-color);
         }
 
@@ -105,13 +201,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
-            cursor: pointer;
-        }
-
-        .likert-item input[type="radio"] {
-            transform: scale(1.3);
-            margin: 0;
+            gap: 10px;
             cursor: pointer;
         }
 
@@ -120,53 +210,43 @@
             justify-content: space-between;
             font-size: 13px;
             color: var(--text-muted);
-            margin-top: 8px;
-            padding: 0 10px;
+            margin-top: 10px;
+            padding: 0 5px;
         }
 
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-family: inherit;
-            resize: vertical;
-            min-height: 80px;
-            box-sizing: border-box;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(103, 58, 183, 0.2);
-        }
-
+        /* 按鈕樣式 */
         .submit-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 24px;
+            background-color: transparent;
+            color: var(--tech-cyan);
+            border: 1px solid var(--tech-cyan);
+            padding: 14px 28px;
             font-size: 16px;
             font-weight: 600;
             border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.3s ease;
             display: block;
             width: 100%;
-            margin-top: 24px;
+            margin-top: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.1) inset;
         }
 
         .submit-btn:hover {
-            background-color: #512da8;
+            background-color: var(--tech-cyan);
+            color: #000000;
+            box-shadow: 0 0 15px var(--tech-cyan-glow);
         }
 
+        /* 隱藏區塊 */
         .hidden {
             display: none;
         }
         
         @media (max-width: 480px) {
             .likert-scale {
-                padding: 12px 8px;
+                padding: 15px 10px;
             }
         }
     </style>
@@ -177,12 +257,25 @@
     <form id="echoFeedbackForm">
         
         <div class="card">
-            <h1>📌 CV Cardiac Echo 課後回饋問卷</h1>
-            <p style="color: var(--text-muted); font-size: 14px;">感謝您參與本次課程，請撥冗填寫回饋，協助我們持續優化教學品質。</p>
+            <h1 class="header-title">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 36px; height: 36px;">
+                    <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                    <polyline points="3 12 7 12 9 5 13 19 15 12 21 12"></polyline>
+                </svg>
+                CV Cardiac Echo 課後回饋問卷
+            </h1>
+            <p style="color: var(--text-muted); font-size: 15px;">Data collection in progress. 感謝您參與本次課程，請撥冗填寫回饋，協助我們持續優化教學品質。</p>
         </div>
 
         <div class="card" id="section-0">
-            <h2>【Section 0】身分與修課狀態（必填）</h2>
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                【Section 0】身分與修課狀態（必填）
+            </h2>
+            
             <div class="question-title">Q1. 本次課程參與狀態</div>
             <div class="radio-group">
                 <label class="radio-label">
@@ -194,11 +287,37 @@
                     參加大堂課＋實作課程
                 </label>
             </div>
+
+            <div class="question-title" style="margin-top: 24px;">Q2. 請問您是？</div>
+            <input type="text" name="q2_name" placeholder="請輸入姓名" required style="margin-bottom: 24px;">
+
+            <div class="question-title">Q3. 人事號？</div>
+            <input type="text" name="q3_id" placeholder="請輸入人事號" required style="margin-bottom: 24px;">
+
+            <div class="question-title">Q4. 您目前的身分是？</div>
+            <select name="q4_role" required>
+                <option value="" disabled selected>-- 請選擇身分 --</option>
+                <option value="PGY1">PGY1</option>
+                <option value="PGY2（內科組）">PGY2（內科組）</option>
+                <option value="PGY2（不分組）">PGY2（不分組）</option>
+                <option value="R1">R1</option>
+                <option value="R2">R2</option>
+                <option value="R3">R3</option>
+                <option value="Fellow">Fellow</option>
+            </select>
         </div>
 
         <div class="card" id="section-a">
-            <h2>🟦 Section A：大堂課回饋（所有人都填）</h2>
-            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">請依據 1（非常不同意）至 5（非常同意）進行評分。</p>
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                    <polyline points="4 10 8 10 10 6 14 14 16 10 20 10"></polyline>
+                </svg>
+                🟦 Section A：大堂課回饋（所有人都填）
+            </h2>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">請依據 1（非常不同意）至 5（非常同意）進行評分。</p>
 
             <div class="question-title">🔹 A1. 課程整體滿意度</div>
             <div class="question-desc">我認為本次 CV cardiac echo 大堂課整體安排有助於我理解心臟超音波的基本架構。</div>
@@ -245,7 +364,7 @@
             </div>
             <br>
 
-            <div class="question-title">🔹 A5. 自我效能感</div>
+            <div class="question-title">🔹 A5. 自效能感</div>
             <div class="question-desc">課程後，我對於未來學習或執行 cardiac echo 的信心有所提升。</div>
             <div class="likert-scale">
                 <label class="likert-item"><input type="radio" name="a5" value="1" required><span>1</span></label>
@@ -257,19 +376,24 @@
             <br>
 
             <div class="question-title">🔹 A6. 開放式問題</div>
-            <div style="margin-bottom: 12px;">
-                <label style="font-size: 14px; font-weight: 500;">本次大堂課對你最大的幫助是什麼？</label>
-                <textarea name="a6_1" placeholder="請輸入您的回饋..."></textarea>
+            <div style="margin-bottom: 16px;">
+                <label style="font-size: 14px; font-weight: 500; display:block; margin-bottom:6px;">本次大堂課對你最大的幫助是什麼？</label>
+                <textarea name="a6_1" placeholder="Type your answer here..."></textarea>
             </div>
             <div>
-                <label style="font-size: 14px; font-weight: 500;">你希望未來課程增加哪些內容？</label>
-                <textarea name="a6_2" placeholder="請輸入您的建議..."></textarea>
+                <label style="font-size: 14px; font-weight: 500; display:block; margin-bottom:6px;">你希望未來課程增加哪些內容？</label>
+                <textarea name="a6_2" placeholder="Type your answer here..."></textarea>
             </div>
         </div>
 
         <div class="card hidden" id="section-b">
-            <h2>🟩 Section B：實作課程回饋</h2>
-            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">請依據 1（非常不同意）至 5（非常同意）進行評分。</p>
+            <h2>
+                <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                </svg>
+                🟩 Section B：實作課程回饋
+            </h2>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">請依據 1（非常不同意）至 5（非常同意）進行評分。</p>
 
             <div class="question-title">🔹 B1. 實作安排滿意度</div>
             <div class="question-desc">小組實作（1位Fellow 帶 4 位學員）的安排有助於學習。</div>
@@ -290,129 +414,4 @@
                 <label class="likert-item"><input type="radio" name="b2" value="2"><span>2</span></label>
                 <label class="likert-item"><input type="radio" name="b2" value="3"><span>3</span></label>
                 <label class="likert-item"><input type="radio" name="b2" value="4"><span>4</span></label>
-                <label class="likert-item"><input type="radio" name="b2" value="5"><span>5</span></label>
-            </div>
-            <br>
-
-            <div class="question-title">🔹 B3. 即時回饋的幫助</div>
-            <div class="question-desc">Fellow 在實作中提供的即時回饋對我學習幫助很大。</div>
-            <div class="likert-scale">
-                <label class="likert-item"><input type="radio" name="b3" value="1"><span>1</span></label>
-                <label class="likert-item"><input type="radio" name="b3" value="2"><span>2</span></label>
-                <label class="likert-item"><input type="radio" name="b3" value="3"><span>3</span></label>
-                <label class="likert-item"><input type="radio" name="b3" value="4"><span>4</span></label>
-                <label class="likert-item"><input type="radio" name="b3" value="5"><span>5</span></label>
-            </div>
-            <br>
-
-            <div class="question-title">🔹 B4. 學習負荷</div>
-            <div class="question-desc">實作過程中的學習負擔（操作、判讀）在可接受範圍內。</div>
-            <div class="likert-scale">
-                <label class="likert-item"><input type="radio" name="b4" value="1"><span>1</span></label>
-                <label class="likert-item"><input type="radio" name="b4" value="2"><span>2</span></label>
-                <label class="likert-item"><input type="radio" name="b4" value="3"><span>3</span></label>
-                <label class="likert-item"><input type="radio" name="b4" value="4"><span>4</span></label>
-                <label class="likert-item"><input type="radio" name="b4" value="5"><span>5</span></label>
-            </div>
-            <br>
-
-            <div class="question-title">🔹 B5. 技術信心提升</div>
-            <div class="question-desc">我現在有信心在臨床中嘗試執行 bedside echo。</div>
-            <div class="likert-scale">
-                <label class="likert-item"><input type="radio" name="b5" value="1"><span>1</span></label>
-                <label class="likert-item"><input type="radio" name="b5" value="2"><span>2</span></label>
-                <label class="likert-item"><input type="radio" name="b5" value="3"><span>3</span></label>
-                <label class="likert-item"><input type="radio" name="b5" value="4"><span>4</span></label>
-                <label class="likert-item"><input type="radio" name="b5" value="5"><span>5</span></label>
-            </div>
-            <br>
-
-            <div class="question-title">🔹 B6. 開放式問題</div>
-            <div style="margin-bottom: 12px;">
-                <label style="font-size: 14px; font-weight: 500;">實作課最困難的部分是？</label>
-                <textarea name="b6_1" placeholder="請輸入您的回饋..."></textarea>
-            </div>
-            <div>
-                <label style="font-size: 14px; font-weight: 500;">你希望增加幾次 hands-on 才覺得足夠？</label>
-                <textarea name="b6_2" placeholder="請輸入您的建議..."></textarea>
-            </div>
-        </div>
-
-        <div class="card" id="section-c">
-            <h2>🟨 Section C：整體建議（所有人）</h2>
-            <div class="question-title">整體而言，這樣「大堂課＋分組實作」的教學模式是否值得繼續？</div>
-            <div class="radio-group">
-                <label class="radio-label"><input type="radio" name="c_overall" value="非常值得" required> 非常值得</label>
-                <label class="radio-label"><input type="radio" name="c_overall" value="值得"> 值得</label>
-                <label class="radio-label"><input type="radio" name="c_overall" value="普通"> 普通</label>
-                <label class="radio-label"><input type="radio" name="c_overall" value="不建議"> 不建議</label>
-            </div>
-        </div>
-
-        <button type="submit" class="submit-btn">提交回饋</button>
-    </form>
-</div>
-
-<script>
-    // 監聽 Q1 選項變更，動態控制 Section B 的顯示與必填狀態
-    const attendanceRadios = document.querySelectorAll('input[name="attendance"]');
-    const sectionB = document.getElementById('section-b');
-    const sectionBRadios = sectionB.querySelectorAll('input[type="radio"]');
-
-    attendanceRadios.forEach(radio => {
-        radio.addEventListener('change', function() {
-            if (this.value === 'both') {
-                sectionB.classList.remove('hidden');
-                sectionBRadios.forEach(r => {
-                    r.setAttribute('required', 'true');
-                });
-            } else {
-                sectionB.classList.add('hidden');
-                sectionBRadios.forEach(r => {
-                    r.removeAttribute('required');
-                    r.checked = false;
-                });
-                sectionB.querySelectorAll('textarea').forEach(t => t.value = '');
-            }
-        });
-    });
-
-    // 🌟 表單送出事件串接 GAS 🌟
-    document.getElementById('echoFeedbackForm').addEventListener('submit', function(e) {
-        e.preventDefault(); 
-        
-        const submitBtn = document.querySelector('.submit-btn');
-        submitBtn.textContent = '資料傳送中...';
-        submitBtn.disabled = true;
-        submitBtn.style.backgroundColor = '#9e9e9e';
-
-        const formData = new FormData(this);
-        
-        // ！！請把下面這行的引號內容，替換成你的 GAS 網址！！
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyAgV3Pa1hsiU1502WsliFqDmv8N7v6wRvQIOIuu_P-_dx-SUC6LrIeV1u5LDNPUaX6/exec';
-
-        fetch(scriptURL, { method: 'POST', body: formData })
-            .then(response => response.json())
-            .then(data => {
-                if(data.result === 'success') {
-                    alert('感謝您的填寫！回饋資料已成功送出。');
-                    document.getElementById('echoFeedbackForm').reset(); 
-                    document.getElementById('section-b').classList.add('hidden');
-                } else {
-                    alert('發生錯誤：' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error!', error.message);
-                alert('網路連線異常，請稍後再試。');
-            })
-            .finally(() => {
-                submitBtn.textContent = '提交回饋';
-                submitBtn.disabled = false;
-                submitBtn.style.backgroundColor = 'var(--primary-color)';
-            });
-    });
-</script>
-
-</body>
-</html>
+                <label class="likert-item"><input type="radio
