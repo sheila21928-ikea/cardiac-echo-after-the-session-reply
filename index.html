@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Cardiac Echo 課後回饋問卷</title>
+    <style>
+        :root {
+            --primary-color: #673ab7; /* 類似 Google 表單的紫色 */
+            --bg-color: #f0ebf8;
+            --card-bg: #ffffff;
+            --text-main: #202124;
+            --text-muted: #5f6368;
+            --border-color: #dadce0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px 10px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* 卡片樣式 */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+            border: 1px solid var(--border-color);
+            border-top: 10px solid var(--primary-color);
+        }
+
+        .card:not(:first-child) {
+            border-top: 1px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: var(--primary-color);
+            margin-bottom: 16px;
+            border-bottom: 2px solid var(--bg-color);
+            padding-bottom: 8px;
+        }
+
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .question-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            background-color: #f8f9fa;
+            padding: 8px 12px;
+            border-left: 4px solid #cecece;
+            border-radius: 4px;
+        }
+
+        /* 選擇題樣式 */
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .radio-label input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+
+        /* Likert Scale 樣式 (1-5分) */
+        .likert-scale {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fafafa;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .likert-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .likert-item input[type="radio"] {
+            transform: scale(1.3);
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .likert-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            padding: 0 10px;
+        }
+
+        /* 文字輸入框樣式 */
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 80px;
+            box-sizing: border-box;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(103, 58, 183, 0.2);
+        }
+
+        /* 按鈕樣式 */
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: block;
+            width: 100%;
+            margin-top: 24px;
+        }
+
+        .submit-btn:hover {
+            background-color: #512da8;
+        }
+
+        /* 隱藏 Section B 的預設 class */
+        .hidden {
+            display: none;
+        }
+        
+        /* 手機版適配 Likert */
+        @media (max-width: 480px) {
+            .likert-scale {
+                padding: 12px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <form id="echoFeedbackForm">
+        
+        <div class="card">
+            <h1>📌 CV Cardiac Echo 課後回饋問卷</h1>
+            <p style="color: var(--text-muted); font-size: 14px;">感謝您參與本次課程，請撥冗填寫回饋，協助我們持續優化教學品質。</p>
+        </div>
+
+        <div class="card" id="section-0">
+            <h2>【Section 0】身分與修課狀態（必填）</h2>
+            <div class="question-title">Q1. 本次課程參與狀態</div>
+            <div class="radio-group">
+                <label class="radio-label">
+                    <input type="radio" name="attendance" value="lecture_only" required>
+                    僅參加大堂課
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="attendance" value="both" required>
+                    參加大堂課＋實作課程
+                </label>
+            </div>
+        </div>
+
+        <div class="card" id="section-a">
+            <h2>🟦 Section A：大堂課回饋（所有人都填）</h2>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">請依據 1（非常不同意）至 5（非常同意）進行評分。</p>
+
+            <div class="question-title">🔹 A1. 課程整體滿意度</div>
+            <div class="question-desc">我認為本次 CV cardiac echo 大堂課整體安排有助於我理解心臟超音波的基本架構。</div>
+            <div class="likert-scale">
+                <label class="likert-item"><input type="radio" name="a1" value="1" required><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="a1" value="2"><span>2</span></label>
+                <label class="likert-item"><input type="radio" name="a1" value="3"><span>3</span></label>
+                <label class="likert-item"><input type="radio" name="a1" value="4"><span>4</span></label>
+                <label class="likert-item"><input type="radio" name="a1" value="5"><span>5</span></label>
+            </div>
+            <div class="likert-labels"><span>非常不同意</span><span>非常同意</span></div>
+            <br>
+
+            <div class="question-title">🔹 A2. 概念理解程度</div>
+            <div class="question-desc">課程後，我能清楚說明 standard cardiac echo views 及其臨床意義。</div>
+            <div class="likert-scale">
+                <label class="likert-item"><input type="radio" name="a2" value="1" required><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="a2" value="2"><span>2</span></label>
+                <label class="likert-item"><input type="radio" name="a2" value="3"><span>3</span></label>
+                <label class="likert-item"><input type="radio" name="a2" value="4"><span>4</span></label>
+                <label class="likert-item"><input type="radio" name="a2" value="5"><span>5</span></label>
+            </div>
+            <br>
+
+            <div class="question-title">🔹 A3. 臨床應用連結</div>
+            <div class="question-desc">我能將課程內容連結到臨床情境（如 LV function 評估、valvular disease）。</div>
+            <div class="likert-scale">
+                <label class="likert-item"><input type="radio" name="a3" value="1" required><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="a3" value="2"><span>2</span></label>
+                <label class="likert-item"><input type="radio" name="a3" value="3"><span>3</span></label>
+                <label class="likert-item"><input type="radio" name="a3" value="4"><span>4</span></label>
+                <label class="likert-item"><input type="radio" name="a3" value="5"><span>5</span></label>
+            </div>
+            <br>
+
+            <div class="question-title">🔹 A4. 教學清晰度</div>
+            <div class="question-desc">授課 Fellow 的講解清楚且具邏輯性。</div>
+            <div class="likert-scale">
+                <label class="likert-item"><input type="radio" name="a4" value="1" required><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="a4" value="2"><span>2</span></label>
+                <label class="likert-item"><input type="radio" name="a4" value="3"><span>3</span></label>
+                <label class="likert-item"><input type="radio" name="a4" value="4"><span>4</span></label>
+                <label class="likert-item"><input type="radio" name="a4" value="5"><span>5</span></label>
+            </div>
+            <br>
+
+            <div class="question-title">🔹 A5. 自我效能感</div>
+            <div class="question-desc">課程後，我對於未來學習或執行 cardiac echo 的信心有所提升。</div>
+            <div class="likert-scale">
+                <label class="likert-item"><input type="radio" name="a5" value="1" required><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="a5" value="2"><span>2</span></label>
+                <label class="likert-item"><input type="radio" name="a5" value="3"><span>3</span></label>
+                <label class="likert-item"><input type="radio" name="a5" value="4"><span>4</span></label>
+                <label class="likert-item"><input type="radio" name="a5" value="5"><span>5</span></label>
+            </div>
+            <br>
+
+            <div class="question-title">🔹 A6. 開放式問題</div>
+            <div style="margin-bottom: 12px;">
+                <label style="font-size: 14px; font-weight: 500;">本次大堂課對你最大的幫助是什麼？</label>
+                <textarea name="a6_1" placeholder="請輸入您的回饋..."></textarea>
+            </div>
+            <div>
+                <label style="font-size: 14px; font-weight: 500;">你希望未來課程增加哪些內容？</label>
+                <textarea name="a6_2" placeholder="請輸入您的建議..."></textarea>
+            </div>
+        </div>
+
+        <div class="card hidden" id="section-b">
+            <h2>🟩 Section B：實作課程回饋</h2>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">請依據 1（非常不同意）至 5（非常同意）進行評分。</p>
+
+            <div class="question-title">🔹 B1. 實作安排滿意度</div>
+            <div class="question-desc">小組實作（1位Fellow 帶 4 位學員）的安排有助於學習。</div>
+            <div class="likert-scale">
+                <label class="likert-item"><input type="radio" name="b1" value="1"><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="b1" value="2"><span>2</span></label>
+                <label class="likert-item"><input type="radio" name="b1" value="3"><span>3</span></label>
+                <label class="likert-item"><input type="radio" name="b1" value="4"><span>4</span></label>
+                <label class="likert-item"><input type="radio" name="b1" value="5"><span>5</span></label>
+            </div>
+            <div class="likert-labels"><span>非常不同意</span><span>非常同意</span></div>
+            <br>
+
+            <div class="question-title">🔹 B2. 技能掌握感</div>
+            <div class="question-desc">實作課後，我能獨立完成基本 standard echo view 掃描。</div>
+            <div class="likert-scale">
+                <label class="likert-item"><input type="radio" name="b2" value="1"><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="b2" value="2"><span>2</span></label>
+                <label class="likert-item"><input type="radio" name="b2" value="3"><span>3</span></label>
+                <label class="likert-item"><input type="radio" name="b2" value="4"><span>4</span></label>
+                <label class="likert-item"><input type="radio" name="b2" value="5"><span>5</span></label>
+            </div>
+            <br>
+
+            <div class="question-title">🔹 B3. 即時回饋的幫助</div>
+            <div class="question-desc">Fellow 在實作中提供的即時回饋對我學習幫助很大。</div>
+            <div class="likert-scale">
+                <label class="likert-item"><input type="radio" name="b3" value="1"><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="b3" value="2"><span>2</span></label>
+                <label class="likert-item"><input type="radio" name="b3" value="3"><span>3</span></label>
+                <label class="likert-item"><input type="radio" name="b3" value="4"><span>4</span></label>
+                <label class="likert-item"><input type="radio" name="b3" value="5"><span>5</span></label>
+            </div>
+            <br>
+
+            <div class="question-title">🔹 B4. 學習負荷</div>
+            <div class="question-desc">實作過程中的學習負擔（操作、判讀）在可接受範圍內。</div>
+            <div class="likert-scale">
+                <label class="likert-item"><input type="radio" name="b4" value="1"><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="b4" value="2"><span>2</span></label>
+                <label class="likert-item"><input type="radio" name="b4" value="3"><span>3</span></label>
+                <label class="likert-item"><input type="radio" name="b4" value="4"><span>4</span></label>
+                <label class="likert-item"><input type="radio" name="b4" value="5"><span>5</span></label>
+            </div>
+            <br>
+
+            <div class="question-title">🔹 B5. 技術信心提升</div>
+            <div class="question-desc">我現在有信心在臨床中嘗試執行 bedside echo。</div>
+            <div class="likert-scale">
+                <label class="likert-item"><input type="radio" name="b5" value="1"><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="b5" value="2"><span>2</span></label>
+                <label class="likert-item"><input type="radio" name="b5" value="3"><span>3</span></label>
+                <label class="likert-item"><input type="radio" name="b5" value="4"><span>4</span></label>
+                <label class="likert-item"><input type="radio" name="b5" value="5"><span>5</span></label>
+            </div>
+            <br>
+
+            <div class="question-title">🔹 B6. 開放式問題</div>
+            <div style="margin-bottom: 12px;">
+                <label style="font-size: 14px; font-weight: 500;">實作課最困難的部分是？</label>
+                <textarea name="b6_1" placeholder="請輸入您的回饋..."></textarea>
+            </div>
+            <div>
+                <label style="font-size: 14px; font-weight: 500;">你希望增加幾次 hands-on 才覺得足夠？</label>
+                <textarea name="b6_2" placeholder="請輸入您的建議..."></textarea>
+            </div>
+        </div>
+
+        <div class="card" id="section-c">
+            <h2>🟨 Section C：整體建議（所有人）</h2>
+            <div class="question-title">整體而言，這樣「大堂課＋分組實作」的教學模式是否值得繼續？</div>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="c_overall" value="非常值得" required> 非常值得</label>
+                <label class="radio-label"><input type="radio" name="c_overall" value="值得"> 值得</label>
+                <label class="radio-label"><input type="radio" name="c_overall" value="普通"> 普通</label>
+                <label class="radio-label"><input type="radio" name="c_overall" value="不建議"> 不建議</label>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">提交回饋</button>
+    </form>
+</div>
+
+<script>
+    // 監聽 Q1 選項變更，動態控制 Section B 的顯示與必填狀態
+    const attendanceRadios = document.querySelectorAll('input[name="attendance"]');
+    const sectionB = document.getElementById('section-b');
+    const sectionBRadios = sectionB.querySelectorAll('input[type="radio"]');
+
+    attendanceRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.value === 'both') {
+                // 如果選「參加大堂課＋實作課程」，顯示 Section B 並將單選題設為必填
+                sectionB.classList.remove('hidden');
+                sectionBRadios.forEach(r => {
+                    // 這裡針對 B1-B5 加上 required
+                    r.setAttribute('required', 'true');
+                });
+            } else {
+                // 如果選「僅參加大堂課」，隱藏 Section B 並移除必填屬性
+                sectionB.classList.add('hidden');
+                sectionBRadios.forEach(r => {
+                    r.removeAttribute('required');
+                    r.checked = false; // 清除已選取的選項
+                });
+                // 清除文字框內容
+                sectionB.querySelectorAll('textarea').forEach(t => t.value = '');
+            }
+        });
+    });
+
+    // 表單提交事件 (預留)
+    document.getElementById('echoFeedbackForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // 防止頁面重整
+        // 這裡可以串接 Google Apps Script (GAS) 將資料寫入 Google Sheets
+        alert('感謝您的填寫！資料已成功送出。');
+    });
+</script>
+
+</body>
+</html>
