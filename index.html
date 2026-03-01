@@ -102,7 +102,7 @@
         }
 
         .question-desc {
-            font-size: 16px;
+            font-size: 18px;
             color: var(--tech-cyan);
             margin-bottom: 16px;
             background-color: rgba(0, 229, 255, 0.05);
@@ -205,13 +205,12 @@
             cursor: pointer;
         }
 
-        .likert-labels {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
+        .likert-end-label {
+            font-size: 12px;
             color: var(--text-muted);
-            margin-top: 10px;
-            padding: 0 5px;
+            line-height: 1.2;
+            text-align: center;
+            min-height: 28px;
         }
 
         /* 按鈕樣式 */
@@ -317,12 +316,6 @@
 
         <div class="card" id="section-a">
             <h2>
-                <svg class="icon" viewBox="0 0 24 24">
-                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                    <line x1="8" y1="21" x2="16" y2="21"></line>
-                    <line x1="12" y1="17" x2="12" y2="21"></line>
-                    <polyline points="4 10 8 10 10 6 14 14 16 10 20 10"></polyline>
-                </svg>
                 Section A：大堂課回饋（所有人都填）
             </h2>
             <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">請依據 1（非常不同意）至 5（非常同意）進行評分。</p>
@@ -330,61 +323,56 @@
             <div class="question-title">A1. 課程整體滿意度</div>
             <div class="question-desc">我認為本次 CV cardiac echo 大堂課整體安排有助於我理解心臟超音波的基本架構。</div>
             <div class="likert-scale">
-                <label class="likert-item"><input type="radio" name="a1" value="1" required><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="a1" value="1" required><span>1</span><span class="likert-end-label">非常不同意</span></label>
                 <label class="likert-item"><input type="radio" name="a1" value="2"><span>2</span></label>
                 <label class="likert-item"><input type="radio" name="a1" value="3"><span>3</span></label>
                 <label class="likert-item"><input type="radio" name="a1" value="4"><span>4</span></label>
-                <label class="likert-item"><input type="radio" name="a1" value="5"><span>5</span></label>
+                <label class="likert-item"><input type="radio" name="a1" value="5"><span>5</span><span class="likert-end-label">非常同意</span></label>
             </div>
-            <div class="likert-labels"><span>非常不同意</span><span>非常同意</span></div>
             <br>
 
             <div class="question-title">A2. 概念理解程度</div>
             <div class="question-desc">課程後，我能清楚說明 standard cardiac echo views 及其臨床意義。</div>
             <div class="likert-scale">
-                <label class="likert-item"><input type="radio" name="a2" value="1" required><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="a2" value="1" required><span>1</span><span class="likert-end-label">非常不同意</span></label>
                 <label class="likert-item"><input type="radio" name="a2" value="2"><span>2</span></label>
                 <label class="likert-item"><input type="radio" name="a2" value="3"><span>3</span></label>
                 <label class="likert-item"><input type="radio" name="a2" value="4"><span>4</span></label>
-                <label class="likert-item"><input type="radio" name="a2" value="5"><span>5</span></label>
+                <label class="likert-item"><input type="radio" name="a2" value="5"><span>5</span><span class="likert-end-label">非常同意</span></label>
             </div>
-            <div class="likert-labels"><span>非常不同意</span><span>非常同意</span></div>
             <br>
 
             <div class="question-title">A3. 臨床應用連結</div>
             <div class="question-desc">我能將課程內容連結到臨床情境（如 LV function 評估、valvular disease）。</div>
             <div class="likert-scale">
-                <label class="likert-item"><input type="radio" name="a3" value="1" required><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="a3" value="1" required><span>1</span><span class="likert-end-label">非常不同意</span></label>
                 <label class="likert-item"><input type="radio" name="a3" value="2"><span>2</span></label>
                 <label class="likert-item"><input type="radio" name="a3" value="3"><span>3</span></label>
                 <label class="likert-item"><input type="radio" name="a3" value="4"><span>4</span></label>
-                <label class="likert-item"><input type="radio" name="a3" value="5"><span>5</span></label>
+                <label class="likert-item"><input type="radio" name="a3" value="5"><span>5</span><span class="likert-end-label">非常同意</span></label>
             </div>
-            <div class="likert-labels"><span>非常不同意</span><span>非常同意</span></div>
             <br>
 
             <div class="question-title">A4. 教學清晰度</div>
             <div class="question-desc">授課 Fellow 的講解清楚且具邏輯性。</div>
             <div class="likert-scale">
-                <label class="likert-item"><input type="radio" name="a4" value="1" required><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="a4" value="1" required><span>1</span><span class="likert-end-label">非常不同意</span></label>
                 <label class="likert-item"><input type="radio" name="a4" value="2"><span>2</span></label>
                 <label class="likert-item"><input type="radio" name="a4" value="3"><span>3</span></label>
                 <label class="likert-item"><input type="radio" name="a4" value="4"><span>4</span></label>
-                <label class="likert-item"><input type="radio" name="a4" value="5"><span>5</span></label>
+                <label class="likert-item"><input type="radio" name="a4" value="5"><span>5</span><span class="likert-end-label">非常同意</span></label>
             </div>
-            <div class="likert-labels"><span>非常不同意</span><span>非常同意</span></div>
             <br>
 
             <div class="question-title">A5. 自我效能感</div>
             <div class="question-desc">課程後，我對於未來學習或執行 cardiac echo 的信心有所提升。</div>
             <div class="likert-scale">
-                <label class="likert-item"><input type="radio" name="a5" value="1" required><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="a5" value="1" required><span>1</span><span class="likert-end-label">非常不同意</span></label>
                 <label class="likert-item"><input type="radio" name="a5" value="2"><span>2</span></label>
                 <label class="likert-item"><input type="radio" name="a5" value="3"><span>3</span></label>
                 <label class="likert-item"><input type="radio" name="a5" value="4"><span>4</span></label>
-                <label class="likert-item"><input type="radio" name="a5" value="5"><span>5</span></label>
+                <label class="likert-item"><input type="radio" name="a5" value="5"><span>5</span><span class="likert-end-label">非常同意</span></label>
             </div>
-            <div class="likert-labels"><span>非常不同意</span><span>非常同意</span></div>
             <br>
 
             <div class="question-title">A6. 開放式問題</div>
@@ -400,9 +388,6 @@
 
         <div class="card hidden" id="section-b">
             <h2>
-                <svg class="icon" viewBox="0 0 24 24">
-                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                </svg>
                 Section B：實作課程回饋
             </h2>
             <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">請依據 1（非常不同意）至 5（非常同意）進行評分。</p>
@@ -410,61 +395,56 @@
             <div class="question-title">B1. 實作安排滿意度</div>
             <div class="question-desc">小組實作（1位Fellow 帶 4 位學員）的安排有助於學習。</div>
             <div class="likert-scale">
-                <label class="likert-item"><input type="radio" name="b1" value="1"><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="b1" value="1"><span>1</span><span class="likert-end-label">非常不同意</span></label>
                 <label class="likert-item"><input type="radio" name="b1" value="2"><span>2</span></label>
                 <label class="likert-item"><input type="radio" name="b1" value="3"><span>3</span></label>
                 <label class="likert-item"><input type="radio" name="b1" value="4"><span>4</span></label>
-                <label class="likert-item"><input type="radio" name="b1" value="5"><span>5</span></label>
+                <label class="likert-item"><input type="radio" name="b1" value="5"><span>5</span><span class="likert-end-label">非常同意</span></label>
             </div>
-            <div class="likert-labels"><span>非常不同意</span><span>非常同意</span></div>
             <br>
 
             <div class="question-title">B2. 技能掌握感</div>
             <div class="question-desc">實作課後，我能獨立完成基本 standard echo view 掃描。</div>
             <div class="likert-scale">
-                <label class="likert-item"><input type="radio" name="b2" value="1"><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="b2" value="1"><span>1</span><span class="likert-end-label">非常不同意</span></label>
                 <label class="likert-item"><input type="radio" name="b2" value="2"><span>2</span></label>
                 <label class="likert-item"><input type="radio" name="b2" value="3"><span>3</span></label>
                 <label class="likert-item"><input type="radio" name="b2" value="4"><span>4</span></label>
-                <label class="likert-item"><input type="radio" name="b2" value="5"><span>5</span></label>
+                <label class="likert-item"><input type="radio" name="b2" value="5"><span>5</span><span class="likert-end-label">非常同意</span></label>
             </div>
-            <div class="likert-labels"><span>非常不同意</span><span>非常同意</span></div>
             <br>
 
             <div class="question-title">B3. 即時回饋的幫助</div>
             <div class="question-desc">Fellow 在實作中提供的即時回饋對我學習幫助很大。</div>
             <div class="likert-scale">
-                <label class="likert-item"><input type="radio" name="b3" value="1"><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="b3" value="1"><span>1</span><span class="likert-end-label">非常不同意</span></label>
                 <label class="likert-item"><input type="radio" name="b3" value="2"><span>2</span></label>
                 <label class="likert-item"><input type="radio" name="b3" value="3"><span>3</span></label>
                 <label class="likert-item"><input type="radio" name="b3" value="4"><span>4</span></label>
-                <label class="likert-item"><input type="radio" name="b3" value="5"><span>5</span></label>
+                <label class="likert-item"><input type="radio" name="b3" value="5"><span>5</span><span class="likert-end-label">非常同意</span></label>
             </div>
-            <div class="likert-labels"><span>非常不同意</span><span>非常同意</span></div>
             <br>
 
             <div class="question-title">B4. 學習負荷</div>
             <div class="question-desc">實作過程中的學習負擔（操作、判讀）在可接受範圍內。</div>
             <div class="likert-scale">
-                <label class="likert-item"><input type="radio" name="b4" value="1"><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="b4" value="1"><span>1</span><span class="likert-end-label">非常不同意</span></label>
                 <label class="likert-item"><input type="radio" name="b4" value="2"><span>2</span></label>
                 <label class="likert-item"><input type="radio" name="b4" value="3"><span>3</span></label>
                 <label class="likert-item"><input type="radio" name="b4" value="4"><span>4</span></label>
-                <label class="likert-item"><input type="radio" name="b4" value="5"><span>5</span></label>
+                <label class="likert-item"><input type="radio" name="b4" value="5"><span>5</span><span class="likert-end-label">非常同意</span></label>
             </div>
-            <div class="likert-labels"><span>非常不同意</span><span>非常同意</span></div>
             <br>
 
             <div class="question-title">B5. 技術信心提升</div>
             <div class="question-desc">我現在有信心在臨床中嘗試執行 bedside echo。</div>
             <div class="likert-scale">
-                <label class="likert-item"><input type="radio" name="b5" value="1"><span>1</span></label>
+                <label class="likert-item"><input type="radio" name="b5" value="1"><span>1</span><span class="likert-end-label">非常不同意</span></label>
                 <label class="likert-item"><input type="radio" name="b5" value="2"><span>2</span></label>
                 <label class="likert-item"><input type="radio" name="b5" value="3"><span>3</span></label>
                 <label class="likert-item"><input type="radio" name="b5" value="4"><span>4</span></label>
-                <label class="likert-item"><input type="radio" name="b5" value="5"><span>5</span></label>
+                <label class="likert-item"><input type="radio" name="b5" value="5"><span>5</span><span class="likert-end-label">非常同意</span></label>
             </div>
-            <div class="likert-labels"><span>非常不同意</span><span>非常同意</span></div>
             <br>
 
             <div class="question-title">B6. 開放式問題</div>
@@ -480,12 +460,6 @@
 
         <div class="card" id="section-c">
             <h2>
-                <svg class="icon" viewBox="0 0 24 24">
-                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                    <line x1="8" y1="11" x2="16" y2="11"></line>
-                    <line x1="8" y1="15" x2="16" y2="15"></line>
-                </svg>
                 Section C：整體建議（所有人）
             </h2>
             <div class="question-title">整體而言，這樣「大堂課＋分組實作」的教學模式是否值得繼續？</div>
