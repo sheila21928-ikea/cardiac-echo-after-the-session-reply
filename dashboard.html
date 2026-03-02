@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Cardiac Echo 即時戰情儀表板</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0a0f16;
+            --card-bg: #111823;
+            --tech-cyan: #00e5ff;
+            --tech-cyan-glow: rgba(0, 229, 255, 0.2);
+            --text-main: #e2e8f0;
+            --border-color: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            background-image: 
+                linear-gradient(var(--border-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--tech-cyan);
+            padding-bottom: 15px;
+        }
+
+        h1 {
+            color: var(--tech-cyan);
+            text-shadow: 0 0 15px var(--tech-cyan-glow);
+            letter-spacing: 2px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .icon {
+            width: 32px;
+            height: 32px;
+            fill: none;
+            stroke: var(--tech-cyan);
+            stroke-width: 2;
+        }
+
+        /* 儀表板網格排版 */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .chart-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-top: 3px solid var(--tech-cyan);
+            border-radius: 6px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .chart-card h3 {
+            margin-top: 0;
+            color: #fff;
+            font-size: 16px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .kpi-container {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .kpi-value {
+            font-size: 48px;
+            font-weight: bold;
+            color: var(--tech-cyan);
+            text-shadow: 0 0 10px var(--tech-cyan-glow);
+        }
+
+        .kpi-label {
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        /* 載入中動畫 */
+        #loader {
+            text-align: center;
+            color: var(--tech-cyan);
+            font-size: 20px;
+            margin-top: 50px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; text-shadow: 0 0 15px var(--tech-cyan); }
+            100% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                <polyline points="3 12 7 12 9 5 13 19 15 12 21 12"></polyline>
+            </svg>
+            CV Echo 戰情儀表板 (即時連線)
+        </h1>
+    </div>
+
+    <div id="loader">連線至資料庫中... Data Synchronizing...</div>
+
+    <div class="dashboard-grid" id="dashboard" style="display: none;">
+        
+        <div class="chart-card">
+            <h3>總數據概況 Total Metrics</h3>
+            <div class="kpi-container">
+                <div>
+                    <div class="kpi-value" id="totalResponses">0</div>
+                    <div class="kpi-label">有效問卷總數</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h3>參與者身分分佈 (Role Distribution)</h3>
+            <canvas id="roleChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <h3>大堂課各項滿意度平均 (A1-A5)</h3>
+            <canvas id="radarChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <h3>整體教學模式建議 (Overall Feedback)</h3>
+            <canvas id="barChart"></canvas>
+        </div>
+
+    </div>
+
+    <script>
+        // ！！請替換成你的 GAS 網頁應用程式網址！！
+        const SCRIPT_URL = '請在這裡貼上你的_GAS_網頁應用程式網址';
+
+        // 設定 Chart.js 全局科技風預設值
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Segoe UI';
+
+        async function fetchDashboardData() {
+            try {
+                const response = await fetch(SCRIPT_URL);
+                const result = await response.json();
+                
+                if(result.status === 'success') {
+                    processData(result.data);
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('dashboard').style.display = 'grid';
+                }
+            } catch (error) {
+                document.getElementById('loader').innerHTML = '資料連線失敗，請檢查網址或網路狀態。';
+                console.error('Fetch error:', error);
+            }
+        }
+
+        function processData(data) {
+            // 資料為 2D 陣列，[0] 是表頭，[1] 開始是內容
+            const headers = data[0];
+            const rows = data.slice(1).filter(row => row[0] !== ''); // 過濾空行
+
+            // 尋找各欄位在試算表中的索引值 (避免因為欄位增減導致抓錯位置)
+            const roleIdx = headers.findIndex(h => h.includes('身分') || h.includes('Q4'));
+            // 如果表頭還沒更新，預設以第5欄(index 4)作為身分欄位
+            const fallbackRoleIdx = roleIdx !== -1 ? roleIdx : 4; 
+            
+            const a1Idx = headers.findIndex(h => h.includes('A1'));
+            const cOverallIdx = headers.findIndex(h => h.includes('C_整體'));
+            
+            // 基礎資料容器
+            let total = rows.length;
+            let roleCount = {};
+            let aScores = { a1:0, a2:0, a3:0, a4:0, a5:0 };
+            let aValidCount = 0;
+            let cOverallCount = {};
+
+            rows.forEach(row => {
+                // 計算身分
+                const role = row[fallbackRoleIdx] || '未填寫';
+                roleCount[role] = (roleCount[role] || 0) + 1;
+
+                // 計算 A1-A5 總分 (A1 index 起算連續 5 格)
+                const s1 = parseInt(row[a1Idx]);
+                if(!isNaN(s1)) {
+                    aScores.a1 += s1;
+                    aScores.a2 += parseInt(row[a1Idx+1]) || 0;
+                    aScores.a3 += parseInt(row[a1Idx+2]) || 0;
+                    aScores.a4 += parseInt(row[a1Idx+3]) || 0;
+                    aScores.a5 += parseInt(row[a1Idx+4]) || 0;
+                    aValidCount++;
+                }
+
+                // 計算整體建議
+                const cSuggestion = row[cOverallIdx] || '未填寫';
+                cOverallCount[cSuggestion] = (cOverallCount[cSuggestion] || 0) + 1;
+            });
+
+            // 更新 KPI
+            document.getElementById('totalResponses').innerText = total;
+
+            // 繪製圖表
+            drawRoleChart(roleCount);
+            drawRadarChart(aScores, aValidCount);
+            drawBarChart(cOverallCount);
+        }
+
+        function drawRoleChart(roleCount) {
+            new Chart(document.getElementById('roleChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(roleCount),
+                    datasets: [{
+                        data: Object.values(roleCount),
+                        backgroundColor: ['#00e5ff', '#1e90ff', '#4b0082', '#8a2be2', '#20b2aa', '#4682b4'],
+                        borderColor: '#111823',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: 'right' } }
+                }
+            });
+        }
+
+        function drawRadarChart(aScores, count) {
+            // 計算平均分並取到小數點第一位
+            const avg = (sum) => count > 0 ? (sum / count).toFixed(1) : 0;
+            
+            new Chart(document.getElementById('radarChart'), {
+                type: 'radar',
+                data: {
+                    labels: ['A1 整體滿意', 'A2 概念理解', 'A3 臨床連結', 'A4 教學清晰', 'A5 信心提升'],
+                    datasets: [{
+                        label: '平均分數 (滿分5)',
+                        data: [avg(aScores.a1), avg(aScores.a2), avg(aScores.a3), avg(aScores.a4), avg(aScores.a5)],
+                        backgroundColor: 'rgba(0, 229, 255, 0.2)',
+                        borderColor: '#00e5ff',
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#00e5ff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            pointLabels: { color: '#e2e8f0', font: { size: 12 } },
+                            ticks: { 
+                                min: 0, 
+                                max: 5, 
+                                stepSize: 1, 
+                                display: false // 隱藏蜘蛛網內的數字標籤，維持科技感簡潔
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function drawBarChart(cOverallCount) {
+            new Chart(document.getElementById('barChart'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(cOverallCount),
+                    datasets: [{
+                        label: '填寫人數',
+                        data: Object.values(cOverallCount),
+                        backgroundColor: 'rgba(0, 229, 255, 0.6)',
+                        borderColor: '#00e5ff',
+                        borderWidth: 1,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { 
+                            beginAtZero: true, 
+                            ticks: { stepSize: 1 },
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                        },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        // 啟動讀取
+        fetchDashboardData();
+    </script>
+</body>
+</html>
